@@ -8,6 +8,7 @@ import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 
+
 // Components...
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -25,6 +26,7 @@ import { LeaderService } from './services/leader.service';
 
 // Libraries...
 import 'hammerjs';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import 'hammerjs';
     DishdetailComponent,
     HomeComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,9 @@ import 'hammerjs';
     DishService,
     PromotionService,
     LeaderService
+  ],
+  entryComponents: [
+    LoginComponent
   ],
   bootstrap: [AppComponent]
 })
