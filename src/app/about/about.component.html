@@ -54,11 +54,14 @@
   </div>
 
 
-    <md-list>
+    <md-list *ngIf="leaders">
     <h2>Corporate Leadership</h2>
       <md-list-item style = "margin: 20px 0 20px 0;" *ngFor="let leader of leaders">
         <img md-list-avatar src = "{{leader.image}}" height= "50px" alt="{{leader.name}}"/>
         <p md-line>{{leader.name}} {{leader.abbr}}<br/>{{leader.designation}}<br/>{{leader.description}}</p>
       </md-list-item>
     </md-list>
+    <div [hidden]="leaders">
+      <md-spinner></md-spinner><h4>Loading... please wait</h4>
+    </div>
 </div>
