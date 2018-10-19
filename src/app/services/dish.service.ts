@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Dish } from '../shared/dish';
 import { DISHES } from '../shared/dishes';
 
-import { Observable } from 'Rxjs';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/delay';
+import { observeOn } from 'rxjs/operator/observeOn';
 
 @Injectable()
 export class DishService {
@@ -21,5 +22,9 @@ export class DishService {
 
   getFeaturedDish(): Observable<Dish> {
     return Observable.of(DISHES.filter((dish) => (dish.featured))[0]).delay(2000);
+  }
+
+  getDishIds() : Observable<number[]> {
+    return Observable.of(DISHES.map(dish => dish.id)).delay(2000);
   }
 }

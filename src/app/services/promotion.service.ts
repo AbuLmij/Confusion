@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Promotion } from '../shared/promotion';
 import { PROMOTIONS } from '../shared/promotions';
 
-import { Observable } from 'Rxjs';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/delay';
 
 @Injectable()

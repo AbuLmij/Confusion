@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Leader } from '../shared/leader';
 import { LEADERS } from '../shared/leaders';
 
-import { Observable } from 'Rxjs';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/delay';
 
 @Injectable()
