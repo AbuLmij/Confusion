@@ -26,7 +26,7 @@
 
       </md-card-actions>
     </md-card>
-        <div [hidden]="dish">
+        <div [hidden]="dish || errMess">
       <md-spinner></md-spinner><h4>Loading... please wait</h4>
     </div>
   </div>
@@ -75,7 +75,11 @@
     </form>
   </div>
   </div>
-  <div [hidden]="dish">
+  <div [hidden]="dish || errMess">
     <md-spinner></md-spinner>
   </div>
+      <div *ngIf="errMess">
+      <h2>Error</h2>
+      <h4>{{errMess}}</h4>
+    </div>
 </div>
