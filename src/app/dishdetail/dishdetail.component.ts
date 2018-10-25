@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -11,6 +11,7 @@ import { Comment } from './../shared/comment';
 import 'rxjs/add/operator/switchMap';
 import { validateBasis } from '@angular/flex-layout';
 import { ThrowStmt } from '@angular/compiler';
+import { inject } from '@angular/core/testing';
 
 @Component({
   selector: 'app-dishdetail',
@@ -44,7 +45,8 @@ export class DishdetailComponent implements OnInit {
   };
 
   constructor(private dishService: DishService, private route: ActivatedRoute,
-    private location: Location, private fb: FormBuilder) {
+    private location: Location, private fb: FormBuilder,
+    @Inject('BaseURL') private BaseURL) {
       this.createCommentForm();
   }
   
