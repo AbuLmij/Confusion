@@ -22,6 +22,7 @@ import { inject } from '@angular/core/testing';
 
 export class DishdetailComponent implements OnInit {
   dish: Dish;
+  dishCopy: any;
   dishIds: number[];
   prev: number;
   next: number;
@@ -54,14 +55,15 @@ export class DishdetailComponent implements OnInit {
   ngOnInit() {
     this.dishService.getDishIds().subscribe((dishIds) => this.dishIds = dishIds);
     this.route.params.switchMap((params: Params) => this.dishService.getDish(+params['id']))
-    .subscribe(dish => {this.dish = dish; this.setPrevNext(dish.id)},
-    errmess => this.errMess = <any>errmess);
+    .subscribe(dish => {this.dish = dish; this.dishCopy = dish; this.setPrevNext(dish.id)},
+    errmess => this.errMess = <any>errmess.message);
   }
 
   onSubmit(): void {
     this.comment = this.commentForm.value;
     this.comment.date = this.date.toISOString();
-    this.dish.comments.push(this.comment);
+    this.dishCopy.comments.push(this.comment);
+    this.dishCopy.save().subscribe(dish => this.dish = dish);
     this.comment = null;
     this.commentForm.reset({
       rating: 5,
