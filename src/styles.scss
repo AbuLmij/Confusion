@@ -48,3 +48,11 @@ body {
 .error {
   color: red;
 }
+
+.highlight {
+  box-shadow: $primary-color-dark 0 0 10px 2px;
+  z-index: 1;
+}
+.menu-tile {
+  transition: box-shadow, transform, 300ms;
+}
