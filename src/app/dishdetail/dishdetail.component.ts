@@ -3,7 +3,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { trigger, style, state, animate, transition } from '@angular/animations';
+import { visibility, flyInOut, expand } from '../animations/app.animation';
 
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
@@ -18,22 +18,14 @@ import { inject } from '@angular/core/testing';
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
   styleUrls: ['./dishdetail.component.scss'],
+  host: {
+    '[@flyInOut]' : 'true',
+    'style' : 'display: block'
+  },
   animations: [
-    trigger('visibility', [
-            state('void', style({
-        transform: 'scale(0.5)',
-        opacity: 0
-      })),
-      state('shown', style({
-        transform: 'scale(1)',
-        opacity: 1
-      })),
-      state('hidden', style({
-        transform: 'scale(0.5)',
-        opacity: 0
-      })),
-      transition('* => *', animate('0.3s ease-in-out'))
-    ])
+    visibility(),
+    flyInOut(),
+    expand()
   ]
 })
 
@@ -57,25 +49,25 @@ export class DishdetailComponent implements OnInit {
 
   validationMessages = {
     'author': {
-      'required':      'Author Name is required.',
-      'minlength':     'Author Name must be at least 2 characters long.',
+      'required': 'Author Name is required.',
+      'minlength': 'Author Name must be at least 2 characters long.',
     },
     'comment': {
-      'required':      'Comment is required.',
+      'required': 'Comment is required.',
     }
   };
 
   constructor(private dishService: DishService, private route: ActivatedRoute,
     private location: Location, private fb: FormBuilder,
     @Inject('BaseURL') private BaseURL) {
-      this.createCommentForm();
+    this.createCommentForm();
   }
-  
+
   ngOnInit() {
     this.dishService.getDishIds().subscribe((dishIds) => this.dishIds = dishIds);
-    this.route.params.switchMap((params: Params) => {this.visibility = 'hidden'; return this.dishService.getDish(+params['id'])})
-    .subscribe(dish => {this.dish = dish; this.dishCopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown'},
-    errmess => this.errMess = <any>errmess.message);
+    this.route.params.switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishService.getDish(+params['id']) })
+      .subscribe(dish => { this.dish = dish; this.dishCopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown' },
+        errmess => this.errMess = <any>errmess.message);
   }
 
   onSubmit(): void {
@@ -91,7 +83,7 @@ export class DishdetailComponent implements OnInit {
     });
   }
 
-  createCommentForm() : void {
+  createCommentForm(): void {
     this.commentForm = this.fb.group({
       rating: [5, []],
       comment: ['', [Validators.required]],
@@ -101,25 +93,25 @@ export class DishdetailComponent implements OnInit {
     this.onValueChanged();
   }
 
-  onValueChanged(data?: any) { 
-    if(!this.commentForm){
+  onValueChanged(data?: any) {
+    if (!this.commentForm) {
       return;
-    } else if(this.commentForm.invalid){
+    } else if (this.commentForm.invalid) {
       this.comment = null;
-        const form = this.commentForm;
-        for(const field in this.formErrors){
-          this.formErrors[field] = '';
-          const control = form.get(field);
-          if(control && control.dirty && !control.valid){
-            const messages = this.validationMessages[field];
-            for(const key in control.errors){
-              this.formErrors[field] += messages[key] + '\n';
-            }
+      const form = this.commentForm;
+      for (const field in this.formErrors) {
+        this.formErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+          const messages = this.validationMessages[field];
+          for (const key in control.errors) {
+            this.formErrors[field] += messages[key] + '\n';
           }
         }
+      }
     } else {
       this.comment = data;
-      for(const field in this.formErrors){
+      for (const field in this.formErrors) {
         this.formErrors[field] = '';
       }
     }

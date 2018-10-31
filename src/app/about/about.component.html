@@ -54,7 +54,7 @@
   </div>
 
 
-    <md-list *ngIf="leaders">
+    <md-list *ngIf="leaders" [@expand]>
     <h2>Corporate Leadership</h2>
       <md-list-item style = "margin: 20px 0 20px 0;" *ngFor="let leader of leaders">
         <img md-list-avatar src = "{{leader.image}}" height= "50px" alt="{{leader.name}}"/>
